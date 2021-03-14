@@ -6,57 +6,79 @@ from datetime import datetime
 from pytz import timezone
 
 
-@app.route('/', methods=['GET'])
+@app.route('/purchases/', methods=['GET'])
 def on_root():
     return Reply.ok()
 
 
-@app.route('/new_purchase', methods=['POST'])
+@app.route('/purchases/new_purchase', methods=['POST'])
 def on_new_purchase():
     data = request.json
-    _check = check_args_important(('name', 'total'), **data)
+    if not data:
+        return Reply.bad_request(error='Empty json')
+    _check = check_args_important(('name', 'total', 'user_id', 'shop_id', 'method'), **data)
     if not _check[0]:
-        return Reply.bad_request(error=f'Empty important \'{_check[1]}\' field passed')
+        return Reply.bad_request(error=f'Empty important {_check[1]} field passed')
+
 
     items_methods = methods.ItemsMethods()
     purchase_methods = methods.PurchasesMethods()
+    users_methods = methods.UsersMethods()
+
 
     if data.get('ts') and not isinstance(data.get('ts'), int):
-        return Reply.bad_request(error='Invalid \'ts\' field. It must be int.')
+        return Reply.bad_request(error='Invalid ts field. It must be int.')
     elif not isinstance(data['name'], str):
-        return Reply.bad_request(error='Invalid \'name\' field. It must be str.')
+        return Reply.bad_request(error='Invalid name field. It must be str.')
     elif not isinstance(data['total'], int):
-        return Reply.bad_request(error='Invalid \'total\' field. It must be int.')
+        return Reply.bad_request(error='Invalid total field. It must be int.')
+    elif not isinstance(data['method'], str):
+        return Reply.bad_request(error='Invalid method field. It must be str.')
+    elif not isinstance(data['shop_id'], int):
+        return Reply.bad_request(error='Invalid shop_id field. It must be int.')
 
     ts = data.get('ts') or int(datetime.now(timezone('Europe/Moscow')).timestamp())
-    item = items_methods.get_item(name=data['name']) or items_methods.add_new_item(models.Item(data['name']))
-    total = data['total']
-
-    purchase = purchase_methods.add_new_purchase(models.Purchase(item.id, ts, total))
-
-    return Reply.created(id=purchase.id)
+    item = items_methods.get_item(name=data['name']) or items_methods.add_item(models.Item(data['name']))
+    total = abs(data['total'])
+    method = data.get('method')
+    shop_id = data['shop_id']
 
 
-@app.route('/get_purchase', methods=['GET'])
+    user = users_methods.get_user(id=data['user_id'])
+    if not user:
+        user = users_methods.add_user(models.User(id=data['user_id']))
+
+    purchase = purchase_methods.add_purchase(models.Purchase(item.id, ts, total, user.id, shop_id, method))
+
+    return Reply.created(purchase_id=purchase.id)
+
+@app.route('/purchases/get_purchases', methods=['GET'])
 def on_get_purchase():
-    data = dict(request.args)
-    _check = check_args_important(('id',), **data)
-    if not _check[0]:
-        return Reply.bad_request(error=f'Empty important \'{_check[1]}\' field passed')
+    data = request.args
+    if not data:
+        return Reply.bad_request(error='Empty args')
+
+    _check = check_args_non_important(('user_id', 'purchase_id'), **data)
+
+    if not _check:
+        return Reply.bad_request(error='Empty or invalid required query string params')
 
     purchase_methods = methods.PurchasesMethods()
+    items_methods = methods.ItemsMethods()
 
-    try:
-        data['id'] = int(data['id'])
-    except:
-        return Reply.bad_request(error='Invalid \'id\' field. It must be int.')
+    if data.get('user_id'):
+        result = purchase_methods.get_purchases(user_id=data['user_id'])
+    elif data.get('purchase_id'):
+        result = purchase_methods.get_purchases(id=data['purchase_id'])
+    else:
+        return Reply.bad_request(error='Invalid args passed')
 
-    purchase = purchase_methods.get_purchase(id=data['id'])
-    if not purchase:
-        return Reply.not_found(error='Unknown id passed')
+    if not result:
+        return Reply.not_found()
 
-    result = purchase.get_dict()
-    result['item'] = purchase.item.get_dict()  # Up to the next refactoring
-    del result['item_id']  # Ok, ok... Don't kick me
+    result = [x.get_dict() for x in result]
+    for x in result:
+        x['item'] = items_methods.get_item(id=x['item_id']).get_dict()
+        del x['item_id']
 
-    return Reply.ok(result=result)
+    return Reply.ok(purchases=result)

@@ -1,4 +1,4 @@
-from ..models import *
+from ..models import Item
 from .. import Session
 
 
@@ -6,7 +6,7 @@ class ItemsMethods:
     def __init__(self):
         self.__session = Session()
 
-    def add_new_item(self, item: Item) -> Item:
+    def add_item(self, item: Item) -> Item:
         self.__session.add(item)
         self.__session.commit()
 
