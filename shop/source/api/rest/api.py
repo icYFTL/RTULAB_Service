@@ -9,6 +9,7 @@ from functools import wraps
 from core import api_config
 from flask import abort
 from random import randint
+import re
 
 
 def protected(f):
@@ -26,6 +27,37 @@ def on_root():
     return Reply.ok()
 
 
+@app.route('/shop/create', methods=['POST'])
+@protected
+def on_create_shop():
+    data = request.json
+    if not data:
+        return Reply.bad_request(error='Empty json')
+
+    _check = check_args_important(('name', 'address', 'number'), **data)
+    if not _check[0]:
+        return Reply.bad_request(error=f'Empty important {_check[1]} field passed')
+
+    if not isinstance(data['name'], str) or len(data['name']) > 50 or len(data['name']) < 3:
+        return Reply.bad_request(error='Invalid name. Name must be str and len must be 3 < x < 50')
+
+    if not isinstance(data['address'], str) or len(data['address']) > 100:
+        return Reply.bad_request(error='Invalid address. Address must be str and len must be x < 100')
+
+    if not isinstance(data['number'], str) or not re.match('^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$',
+                                                           data['number']):
+        return Reply.bad_request(error='Invalid number')
+
+    shop_methods = methods.ShopMethods()
+    shop = shop_methods.add_shop(models.Shop(
+        name=data['name'],
+        address=data['address'],
+        number=data['number']
+    ))
+
+    return Reply.created(shop_id=shop.id)
+
+
 @app.route('/shop/<shop_id>/add_items', methods=['PUT'])
 @protected
 def on_add_items(shop_id):
@@ -38,7 +70,7 @@ def on_add_items(shop_id):
     except ValueError:
         return Reply.bad_request(error='Invalid shop id. It must be int.')
 
-    _check = check_args_important(('items', ), **data)
+    _check = check_args_important(('items',), **data)
     if not _check[0]:
         return Reply.bad_request(error=f'Empty important {_check[1]} field passed')
 
@@ -64,10 +96,12 @@ def on_add_items(shop_id):
     return Reply.created()
 
 
-
-
 @app.route('/shop/<shop_id>/new_purchase', methods=['POST'])
 def on_new_purchase(shop_id):
+    p_api = PurchasesAPI()
+    if not p_api.is_available():
+        return Reply.failed_dependency(error='Purchases service is down')
+
     data = request.json
     if not data:
         return Reply.bad_request(error='Empty json')
@@ -120,16 +154,6 @@ def on_new_purchase(shop_id):
         return Reply.not_found(error='Unknown slot id passed')
 
     if slots_methods.buy_slot(slot, data['count']):
-        p_api = PurchasesAPI()
-        trans_methods.add_transaction(models.Transaction(
-            user_id=data['user_id'],
-            shop_id=shop_id,
-            slot_id=slot.id,
-            count=data['count'],
-            total=slot.price * data['count'],
-            ts=int(datetime.now(timezone('Europe/Moscow')).timestamp()),
-            method=data['method']
-        ))
         if p_api.add_purchase(
                 slot.name,
                 slot.price * data['count'],
@@ -138,9 +162,19 @@ def on_new_purchase(shop_id):
                 data['method'],
                 slot.category
         ) != 201:
-            return Reply.ok(warning='Payment done, but Purchases service cannot handle the request')
+            return Reply.failed_dependency(error='Purchases service is down')
+        else:
+            trans_methods.add_transaction(models.Transaction(
+                user_id=data['user_id'],
+                shop_id=shop_id,
+                slot_id=slot.id,
+                count=data['count'],
+                total=slot.price * data['count'],
+                ts=int(datetime.now(timezone('Europe/Moscow')).timestamp()),
+                method=data['method']
+            ))
 
-        return Reply.ok()
+            return Reply.ok()
     else:
         return Reply.failed_dependency(error='Not enough slots in the shop')
 

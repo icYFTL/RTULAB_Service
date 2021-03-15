@@ -11,7 +11,7 @@ class Provider(Thread):
         self.state = 'offline'
         self.status = 'preparing'
         self.lock = Lock()
-        self.delay = 1800
+        self.delay = 2
         self.unsynced = 0
 
     def run(self) -> None:

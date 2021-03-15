@@ -1,4 +1,4 @@
 from source.handlers import *
 
-factory_obj = Factory()
+factory_objs = []
 provider_obj = Provider()

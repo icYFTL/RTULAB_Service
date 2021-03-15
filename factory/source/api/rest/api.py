@@ -11,7 +11,11 @@ def on_root():
 
 @app.route('/factory/self/status', methods=['GET'])
 def on_factory_status():
-    return Reply.ok(state=factory_obj.state, status=factory_obj.status)
+    reply = []
+    for obj in factory_objs:
+        reply.append({'category': obj.category, 'state': obj.state, 'status': obj.status})
+
+    return Reply.ok(result=reply)
 
 
 @app.route('/factory/provider/status', methods=['GET'])

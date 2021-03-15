@@ -8,7 +8,6 @@ class ShopAPI:
     def __init__(self):
         self.host = shop_config['host']
 
-
     def is_available(self) -> bool:
         try:
             r = requests.get(self.host)
@@ -39,11 +38,6 @@ class ShopAPI:
 
         r = requests.put(self.host + f'/{shop}/add_items', json={
             'items': [x.get_dict() for x in items]
-        }, headers = {'XXX-CODE': shop_config['password']})
+        }, headers={'XXX-CODE': shop_config['password']})
 
         return r.status_code == 201
-
-
-
-
-
