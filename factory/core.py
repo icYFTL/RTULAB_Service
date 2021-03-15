@@ -1,12 +1,16 @@
 import json
-from threading import Event
+from os import environ
 
 config = json.load(open('config.json', 'r'))
 
 api_config = config['api']
 shop_config = config['shop']
 
-factory_state = Event()
-provider_state = Event()
+db_config = {
+    'host': environ.get('PGHOST'),
+    'db': environ.get('PGDATABASE'),
+    'user': environ.get('PGUSER'),
+    'password': environ.get('PGPASSWORD')
+}
 
 production = json.load(open('production.json', 'r'))

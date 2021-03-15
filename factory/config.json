@@ -3,7 +3,7 @@
     "secret_key": "lolkekcheburek"
   },
   "shop": {
-    "host": "http://localhost:8002/shop",
+    "host": "http://shop:8002/shop",
     "password": "lol"
   }
 }

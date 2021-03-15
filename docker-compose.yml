@@ -1,0 +1,66 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+    volumes:
+      - database_data:/var/lib/postgresql/data
+      - ./factory/init_db.sh:/docker-entrypoint-initdb.d/factory_init_db.sh
+      - ./shop/init_db.sh:/docker-entrypoint-initdb.d/shop_init_db.sh
+      - ./purchases_storage/init_db.sh:/docker-entrypoint-initdb.d/purchases_init_db.sh
+
+  factory:
+    build: ./factory
+    command: python3 main.py
+    depends_on:
+      - db
+    ports:
+      - 8003:8003
+    links:
+      - db
+    environment:
+      - PGHOST=db
+      - PGDATABASE=RL_factory
+      - PGUSER=factory_slave
+      - PGPASSWORD=factory
+
+  shop:
+    build: ./shop
+    command: python3 main.py
+    depends_on:
+      - db
+    ports:
+      - 8002:8002
+    links:
+      - db
+    environment:
+      - PGHOST=db
+      - PGDATABASE=RL_shop
+      - PGUSER=shop_slave
+      - PGPASSWORD=shop
+
+  purchases:
+    build: ./purchases_storage
+    command: python3 main.py
+    depends_on:
+      - db
+    ports:
+      - 8001:8001
+    links:
+      - db
+    environment:
+      - PGHOST=db
+      - PGDATABASE=RL_purchases
+      - PGUSER=purchases_slave
+      - PGPASSWORD=purchases
+
+
+volumes:
+  database_data:
+    driver: local

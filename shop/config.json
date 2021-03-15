@@ -1,6 +1,9 @@
-wvenv/
-venv/
-.idea/
-.DS_Store
-*.db
-
+{
+  "api": {
+    "secret_key": "lolkekcheburek",
+    "password": "lol"
+  },
+  "purchases": {
+    "host": "http://purchases:8001/purchases"
+  }
+}
