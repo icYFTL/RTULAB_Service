@@ -11,6 +11,7 @@ class Factory(Thread):
         self.state = 'offline'
         self.status = ''
         self.lock = Lock()
+        self.delay = 30
 
     def run(self) -> None:
         item_methods = methods.ItemMethods()
@@ -38,9 +39,9 @@ class Factory(Thread):
 
             item_methods.increase_item(item, count)
             print(item)
-            self.status = 'sleep for 30 seconds'
+            self.status = f'sleep for {self.delay} seconds'
 
-            sleep(30)
+            sleep(self.delay)
 
 
 

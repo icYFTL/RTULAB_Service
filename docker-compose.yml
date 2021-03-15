@@ -26,7 +26,7 @@ services:
       - db
     environment:
       - PGHOST=db
-      - PGDATABASE=RL_factory
+      - PGDATABASE=rl_factory
       - PGUSER=factory_slave
       - PGPASSWORD=factory
 
@@ -41,7 +41,7 @@ services:
       - db
     environment:
       - PGHOST=db
-      - PGDATABASE=RL_shop
+      - PGDATABASE=rl_shop
       - PGUSER=shop_slave
       - PGPASSWORD=shop
 
@@ -56,10 +56,17 @@ services:
       - db
     environment:
       - PGHOST=db
-      - PGDATABASE=RL_purchases
+      - PGDATABASE=rl_purchases
       - PGUSER=purchases_slave
       - PGPASSWORD=purchases
 
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - "8004:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
 
 volumes:
   database_data:

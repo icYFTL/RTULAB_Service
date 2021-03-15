@@ -21,7 +21,7 @@ def protected(f):
     return decorated_function
 
 
-@app.route('/shop/', methods=['GET'])
+@app.route('/shop', methods=['GET'])
 def on_root():
     return Reply.ok()
 

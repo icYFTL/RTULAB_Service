@@ -6,7 +6,7 @@ from datetime import datetime
 from pytz import timezone
 
 
-@app.route('/purchases/', methods=['GET'])
+@app.route('/purchases', methods=['GET'])
 def on_root():
     return Reply.ok()
 

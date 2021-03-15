@@ -32,6 +32,9 @@ class ShopAPI:
     @__shops_online
     def add_items(self, items: list) -> bool:
         shops = self.__get_shops()
+        if not shops:
+            return False
+
         shop = choice(shops)['id']
 
         r = requests.put(self.host + f'/{shop}/add_items', json={

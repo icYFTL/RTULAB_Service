@@ -4,22 +4,22 @@ from source.static import *
 from flask import request
 
 
-@app.route('/', methods=['GET'])
+@app.route('/factory/', methods=['GET'])
 def on_root():
     return Reply.ok()
 
 
-@app.route('/factory/status', methods=['GET'])
+@app.route('/factory/self/status', methods=['GET'])
 def on_factory_status():
     return Reply.ok(state=factory_obj.state, status=factory_obj.status)
 
 
-@app.route('/provider/status', methods=['GET'])
+@app.route('/factory/provider/status', methods=['GET'])
 def on_provider_status():
     return Reply.ok(state=provider_obj.state, status=provider_obj.status, unsynced=provider_obj.unsynced)
 
 
-@app.route('/provider/toggle', methods=['PATCH'])
+@app.route('/factory/provider/toggle', methods=['PATCH'])
 def on_provider_toggle():
     data = request.json
 
@@ -45,7 +45,7 @@ def on_provider_toggle():
     return Reply.ok()
 
 
-@app.route('/factory/toggle', methods=['PATCH'])
+@app.route('/factory/self/toggle', methods=['PATCH'])
 def on_factory_toggle():
     data = request.json
 

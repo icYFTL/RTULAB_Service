@@ -1,3 +1,6 @@
 from source.api.rest import *
+from time import sleep
 
-app.run('localhost', 8002, False)
+sleep(2)  # Avoid " the database system is starting up"
+
+app.run('0.0.0.0', 8002, False)
