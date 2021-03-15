@@ -27,3 +27,7 @@ class ItemMethods:
             item.count -= value
 
         self.__session.commit()
+
+    def clear_item(self, item: Item) -> None:
+        item.count = 0
+        self.__session.commit()

@@ -42,16 +42,13 @@ def on_add_items(shop_id):
     if not _check[0]:
         return Reply.bad_request(error=f'Empty important {_check[1]} field passed')
 
-    if not isinstance(data['slot_id'], int):
-        return Reply.bad_request(error='Invalid slot_id. It must be int64 >= 0.')
-
     slots_methods = methods.SlotMethods()
 
     for item in data['items']:
         if not isinstance(item, dict):
             return Reply.bad_request(error='Invalid item. It must be dict')
 
-        _check = check_args_important(('name', 'category', 'count'), **data)
+        _check = check_args_important(('name', 'category', 'count'), **item)
         if not _check[0]:
             return Reply.bad_request(error=f'Invalid item. {_check[1]} field is empty')
 

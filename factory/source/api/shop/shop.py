@@ -11,7 +11,9 @@ class ShopAPI:
 
     def is_available(self) -> bool:
         try:
-            requests.get(self.host)
+            r = requests.get(self.host)
+            if r.status_code != 200:
+                raise NotAvailable()
             return True
         except:
             return False
@@ -20,7 +22,7 @@ class ShopAPI:
         def f(self, *args, **kwargs):
             if not self.is_available():
                 raise NotAvailable('Shop service is not available now')
-            fn(self, *args, **kwargs)
+            return fn(self, *args, **kwargs)
 
         return f
 
@@ -28,13 +30,15 @@ class ShopAPI:
         return requests.get(self.host + '/get_shops').json()['response']['result']
 
     @__shops_online
-    def add_items(self, items: list) -> None:
+    def add_items(self, items: list) -> bool:
         shops = self.__get_shops()
         shop = choice(shops)['id']
 
-        requests.put(self.host + f'/{shop}/add_items', json={
+        r = requests.put(self.host + f'/{shop}/add_items', json={
             'items': [x.get_dict() for x in items]
-        })
+        }, headers = {'XXX-CODE': shop_config['password']})
+
+        return r.status_code == 201
 
 
 

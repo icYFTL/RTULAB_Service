@@ -1,7 +1,7 @@
-from threading import Thread
+from threading import Thread, Lock
 from ..database import *
 from random import choice, randint
-from core import production, factory_state
+from core import production
 from time import sleep
 
 
@@ -10,15 +10,16 @@ class Factory(Thread):
         Thread.__init__(self)
         self.state = 'offline'
         self.status = ''
+        self.lock = Lock()
 
     def run(self) -> None:
         item_methods = methods.ItemMethods()
         self.state = 'online'
 
         while True:
-            if factory_state.isSet():
-                self.state = 'offline'
-                break
+            if self.lock.locked():
+                self.status = 'locked'
+                self.lock.acquire()
 
             category = choice(list(production))
             making_time = randint(1, 10)
@@ -26,7 +27,7 @@ class Factory(Thread):
 
             essence = choice(production[category])
 
-            self.status = f'the {essence} is made for {making_time} seconds'
+            self.status = f'the {essence} will made for {making_time} seconds'
             sleep(making_time)
 
             item = item_methods.get_items(name=essence.lower())
@@ -35,11 +36,9 @@ class Factory(Thread):
             else:
                 item = item[0]
 
-            print(item)
-
             item_methods.increase_item(item, count)
-
-            self.status = 'cooldown for 30 seconds'
+            print(item)
+            self.status = 'sleep for 30 seconds'
 
             sleep(30)
 
