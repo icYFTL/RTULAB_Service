@@ -14,7 +14,7 @@ class Purchase(Base, BaseModel):
     ts = Column(Integer, nullable=False)
     total = Column(Integer, nullable=False)
     user_id = Column(Integer, ForeignKey(User.id))
-    method = Column(String(collation='nocase'), nullable=True)
+    method = Column(String, nullable=True)
     shop_id = Column(Integer, nullable=False)
 
     item = relationship('Item', backref='item')

@@ -7,8 +7,8 @@ class Item(Base, BaseModel):
     __tablename__ = 'items'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(collation='nocase'), nullable=False)
-    category = Column(String(collation='nocase'), nullable=True)
+    name = Column(String, nullable=False)
+    category = Column(String, nullable=True)
     count = Column(Integer, default=0)
 
     def __init__(self, name: str, category: str, count=0):
