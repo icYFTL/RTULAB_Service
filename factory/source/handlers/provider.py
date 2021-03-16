@@ -8,21 +8,22 @@ from time import sleep
 class Provider(Thread):
     def __init__(self):
         Thread.__init__(self)
-        self.state = 'offline'
         self.status = 'preparing'
         self.lock = Lock()
-        self.delay = 2
+        self.delay = 60
         self.unsynced = 0
 
     def run(self) -> None:
-        self.state = 'online'
         item_methods = methods.ItemMethods()
 
         while True:
             if self.lock.locked():
                 self.status = 'locked'
                 self.lock.acquire()
-            items = [x for x in item_methods.get_items() if x.count > 0]
+            try:
+                items = [x for x in item_methods.get_items() if x.count > 0]
+            except:
+                continue
             sorted_items = []
             while len(items) > 1:
                 _right = randint(1, len(items) - 1)
@@ -39,7 +40,12 @@ class Provider(Thread):
             for _items in sorted_items:
                 try:
                     if shop.add_items(_items):
-                        [item_methods.clear_item(item) for item in _items]
+                        while True:
+                            try:
+                                [item_methods.clear_item(item) for item in _items]
+                                break
+                            except:
+                                continue
                     self.unsynced = 0
                 except exceptions.NotAvailable:
                     self.unsynced = sum([len(x) for x in sorted_items])

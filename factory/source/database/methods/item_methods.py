@@ -5,6 +5,7 @@ from . import session
 class ItemMethods:
     def __init__(self):
         self.__session = session
+        self.__session.begin_nested()
 
     def add_item(self, item: Item) -> Item:
         self.__session.add(item)

@@ -20,6 +20,7 @@ services:
     command: python3 main.py
     depends_on:
       - db
+      - shop
     ports:
       - 8003:8003
     links:
@@ -35,6 +36,7 @@ services:
     command: python3 main.py
     depends_on:
       - db
+      - purchases
     ports:
       - 8002:8002
     links:

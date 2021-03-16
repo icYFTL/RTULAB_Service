@@ -20,11 +20,9 @@ def on_new_purchase():
     if not _check[0]:
         return Reply.bad_request(error=f'Empty important {_check[1]} field passed')
 
-
     items_methods = methods.ItemsMethods()
     purchase_methods = methods.PurchasesMethods()
     users_methods = methods.UsersMethods()
-
 
     if data.get('ts') and not isinstance(data.get('ts'), int):
         return Reply.bad_request(error='Invalid ts field. It must be int.')
@@ -43,7 +41,6 @@ def on_new_purchase():
     method = data.get('method')
     shop_id = data['shop_id']
 
-
     user = users_methods.get_user(id=data['user_id'])
     if not user:
         user = users_methods.add_user(models.User(id=data['user_id']))
@@ -51,6 +48,7 @@ def on_new_purchase():
     purchase = purchase_methods.add_purchase(models.Purchase(item.id, ts, total, user.id, shop_id, method))
 
     return Reply.created(purchase_id=purchase.id)
+
 
 @app.route('/purchases/get_purchases', methods=['GET'])
 def on_get_purchase():

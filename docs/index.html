@@ -1,0 +1,1056 @@
+<!doctype html>
+<html>
+  <head>
+    <title>RTUITLab project</title>
+    <style type="text/css">
+      body {
+      	font-family: Trebuchet MS, sans-serif;
+      	font-size: 15px;
+      	color: #444;
+      	margin-right: 24px;
+      }
+      
+      h1	{
+      	font-size: 25px;
+      }
+      h2	{
+      	font-size: 20px;
+      }
+      h3	{
+      	font-size: 16px;
+      	font-weight: bold;
+      }
+      hr	{
+      	height: 1px;
+      	border: 0;
+      	color: #ddd;
+      	background-color: #ddd;
+      }
+      
+      .app-desc {
+        clear: both;
+        margin-left: 20px;
+      }
+      .param-name {
+        width: 100%;
+      }
+      .license-info {
+        margin-left: 20px;
+      }
+      
+      .license-url {
+        margin-left: 20px;
+      }
+      
+      .model {
+        margin: 0 0 0px 20px;
+      }
+      
+      .method {
+        margin-left: 20px;
+      }
+      
+      .method-notes	{
+      	margin: 10px 0 20px 0;
+      	font-size: 90%;
+      	color: #555;
+      }
+      
+      pre {
+        padding: 10px;
+        margin-bottom: 2px;
+      }
+      
+      .http-method {
+       text-transform: uppercase;
+      }
+      
+      pre.get {
+        background-color: #0f6ab4;
+      }
+      
+      pre.post {
+        background-color: #10a54a;
+      }
+      
+      pre.put {
+        background-color: #c5862b;
+      }
+      
+      pre.delete {
+        background-color: #a41e22;
+      }
+      
+      .huge	{
+      	color: #fff;
+      }
+      
+      pre.example {
+        background-color: #f3f3f3;
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+      
+      code {
+        white-space: pre;
+      }
+      
+      .nickname {
+        font-weight: bold;
+      }
+      
+      .method-path {
+        font-size: 1.5em;
+        background-color: #0f6ab4;
+      }
+      
+      .up {
+        float:right;
+      }
+      
+      .parameter {
+        width: 500px;
+      }
+      
+      .param {
+        width: 500px;
+        padding: 10px 0 0 20px;
+        font-weight: bold;
+      }
+      
+      .param-desc {
+        width: 700px;
+        padding: 0 0 0 20px;
+        color: #777;
+      }
+      
+      .param-type {
+        font-style: italic;
+      }
+      
+      .param-enum-header {
+      width: 700px;
+      padding: 0 0 0 60px;
+      color: #777;
+      font-weight: bold;
+      }
+      
+      .param-enum {
+      width: 700px;
+      padding: 0 0 0 80px;
+      color: #777;
+      font-style: italic;
+      }
+      
+      .field-label {
+        padding: 0;
+        margin: 0;
+        clear: both;
+      }
+      
+      .field-items	{
+      	padding: 0 0 15px 0;
+      	margin-bottom: 15px;
+      }
+      
+      .return-type {
+        clear: both;
+        padding-bottom: 10px;
+      }
+      
+      .param-header {
+        font-weight: bold;
+      }
+      
+      .method-tags {
+        text-align: right;
+      }
+      
+      .method-tag {
+        background: none repeat scroll 0% 0% #24A600;
+        border-radius: 3px;
+        padding: 2px 10px;
+        margin: 2px;
+        color: #FFF;
+        display: inline-block;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+  <h1>RTUITLab project</h1>
+    <div class="app-desc">REST API for RTUITLab project.</div>
+    <div class="app-desc">More information: <a href="https://helloreverb.com">https://helloreverb.com</a></div>
+    <div class="app-desc">Contact Info: <a href="savap0@yandex.ru">savap0@yandex.ru</a></div>
+    <div class="app-desc">Version: 1.0.0</div>
+    <div class="app-desc">BasePath:/C6317/RTUIT/1.0.0</div>
+    <div class="license-info">Apache 2.0</div>
+    <div class="license-url">http://www.apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Factory">Factory</a></h4>
+  <ul>
+  <li><a href="#factoryProviderStatus"><code><span class="http-method">get</span> /factory/provider/status</code></a></li>
+  <li><a href="#factoryRoot"><code><span class="http-method">get</span> /factory</code></a></li>
+  <li><a href="#factorySelfStatus"><code><span class="http-method">get</span> /factory/self/status</code></a></li>
+  </ul>
+  <h4><a href="#Purchases">Purchases</a></h4>
+  <ul>
+  <li><a href="#purchCommit"><code><span class="http-method">post</span> /purchases/new_purchase</code></a></li>
+  <li><a href="#purchGet"><code><span class="http-method">get</span> /purchases/get_purchases</code></a></li>
+  <li><a href="#purchRoot"><code><span class="http-method">get</span> /purchases</code></a></li>
+  </ul>
+  <h4><a href="#Shop">Shop</a></h4>
+  <ul>
+  <li><a href="#shopCreate"><code><span class="http-method">post</span> /shop/create</code></a></li>
+  <li><a href="#shopGetShops"><code><span class="http-method">get</span> /shop/get_shops</code></a></li>
+  <li><a href="#shopGetSlots"><code><span class="http-method">get</span> /shop/{shop_id}/get_slots</code></a></li>
+  <li><a href="#shopItemsAdd"><code><span class="http-method">put</span> /shop/{shop_id}/add_items</code></a></li>
+  <li><a href="#shopNewPurchase"><code><span class="http-method">post</span> /shop/{shop_id}/new_purchase</code></a></li>
+  <li><a href="#shopRoot"><code><span class="http-method">get</span> /shop</code></a></li>
+  </ul>
+
+  <h1><a name="Factory">Factory</a></h1>
+  <div class="method"><a name="factoryProviderStatus"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /factory/provider/status</code></pre></div>
+    <div class="method-summary">get provider status (<span class="nickname">factoryProviderStatus</span>)</div>
+    <div class="method-notes">Using this path you can check provider&#x27;s status.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#FactoryProviderGenericStatus">FactoryProviderGenericStatus</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "unsynced" : 0,
+  "state" : "online",
+  "status" : "sleeping for 30 seconds"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#FactoryProviderGenericStatus">FactoryProviderGenericStatus</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="factoryRoot"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /factory</code></pre></div>
+    <div class="method-summary">root path (<span class="nickname">factoryRoot</span>)</div>
+    <div class="method-notes">Using this path you can check is service online.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GenericGoodResponse">GenericGoodResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "response" : { },
+  "status" : true
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#GenericGoodResponse">GenericGoodResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="factorySelfStatus"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /factory/self/status</code></pre></div>
+    <div class="method-summary">get factories statuses (<span class="nickname">factorySelfStatus</span>)</div>
+    <div class="method-notes">Using this path you can check factories&#x27;s statuses.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#FactoryGenericState">FactoryGenericState</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "defected" : 0,
+  "state" : "online",
+  "category" : "Cakes",
+  "status" : "sleeping for 30 seconds"
+}, {
+  "defected" : 0,
+  "state" : "online",
+  "category" : "Cakes",
+  "status" : "sleeping for 30 seconds"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Purchases">Purchases</a></h1>
+  <div class="method"><a name="purchCommit"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /purchases/new_purchase</code></pre></div>
+    <div class="method-summary">commit new purchase (<span class="nickname">purchCommit</span>)</div>
+    <div class="method-notes">Using this path you can add new purchase to service.</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#PurchaseObject">PurchaseObject</a> (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; add new purchase </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GenericGoodResponse">GenericGoodResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "response" : { },
+  "status" : true
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    accepted and created
+        <a href="#GenericGoodResponse">GenericGoodResponse</a>
+    <h4 class="field-label">400</h4>
+    invalid content passed
+        <a href="#GenericBadResponse">GenericBadResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="purchGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /purchases/get_purchases</code></pre></div>
+    <div class="method-summary">get user&#x27;s purchases (<span class="nickname">purchGet</span>)</div>
+    <div class="method-notes">Using this path you can get user&#x27;s purchases via user id or purchase id.</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">user_id (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; user&#x27;s id format: int64</div>      <div class="param">purchase_id (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; purchase&#x27;s id format: int64</div>    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#PurchaseOutObject">PurchaseOutObject</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "shop_id" : 1,
+  "total" : 12345,
+  "method" : "card",
+  "item_id" : 1,
+  "user_id" : 12,
+  "name" : "Cake",
+  "id" : 1,
+  "items" : [ {
+    "name" : "Cake",
+    "category" : "Cakes"
+  }, {
+    "name" : "Cake",
+    "category" : "Cakes"
+  } ],
+  "ts" : 1615897387
+}, {
+  "shop_id" : 1,
+  "total" : 12345,
+  "method" : "card",
+  "item_id" : 1,
+  "user_id" : 12,
+  "name" : "Cake",
+  "id" : 1,
+  "items" : [ {
+    "name" : "Cake",
+    "category" : "Cakes"
+  }, {
+    "name" : "Cake",
+    "category" : "Cakes"
+  } ],
+  "ts" : 1615897387
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        
+    <h4 class="field-label">400</h4>
+    Invalid or empty query params
+        <a href="#GenericBadResponse">GenericBadResponse</a>
+    <h4 class="field-label">404</h4>
+    Unknown args
+        <a href="#GenericBadResponse">GenericBadResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="purchRoot"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /purchases</code></pre></div>
+    <div class="method-summary">root path (<span class="nickname">purchRoot</span>)</div>
+    <div class="method-notes">Using this path you can check is service online.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GenericGoodResponse">GenericGoodResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "response" : { },
+  "status" : true
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#GenericGoodResponse">GenericGoodResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Shop">Shop</a></h1>
+  <div class="method"><a name="shopCreate"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /shop/create</code></pre></div>
+    <div class="method-summary">create new shop (<span class="nickname">shopCreate</span>)</div>
+    <div class="method-notes">Using this path you can create new shop. (Protected)</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#ShopObject">ShopObject</a> (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; create new shop </div>
+                </div>  <!-- field-items -->
+
+    <h3 class="field-label">Request headers</h3>
+    <div class="field-items">
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_201">inline_response_201</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "shop_id" : 1
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    accepted and created
+        <a href="#inline_response_201">inline_response_201</a>
+    <h4 class="field-label">400</h4>
+    invalid content passed
+        <a href="#GenericBadResponse">GenericBadResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="shopGetShops"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /shop/get_shops</code></pre></div>
+    <div class="method-summary">get available shops (<span class="nickname">shopGetShops</span>)</div>
+    <div class="method-notes">Using this path you can get available shops.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200">inline_response_200</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "result" : [ {
+    "number" : "79167031412",
+    "address" : "Moscow, Russia, Kek 1-10",
+    "name" : "Pyaterochka"
+  }, {
+    "number" : "79167031412",
+    "address" : "Moscow, Russia, Kek 1-10",
+    "name" : "Pyaterochka"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200">inline_response_200</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="shopGetSlots"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /shop/{shop_id}/get_slots</code></pre></div>
+    <div class="method-summary">get available slots for a shop (<span class="nickname">shopGetSlots</span>)</div>
+    <div class="method-notes">Using this path you can get available slots for a shop.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">shop_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: int64</div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#ShopGenericSlotObject">ShopGenericSlotObject</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "shop_id" : 1,
+  "price" : 3100,
+  "name" : "Fish",
+  "count" : 100,
+  "description" : "Cool red fish",
+  "id" : 1,
+  "category" : "meal"
+}, {
+  "shop_id" : 1,
+  "price" : 3100,
+  "name" : "Fish",
+  "count" : 100,
+  "description" : "Cool red fish",
+  "id" : 1,
+  "category" : "meal"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    ok
+        
+    <h4 class="field-label">400</h4>
+    invalid data
+        <a href="#GenericBadResponse">GenericBadResponse</a>
+    <h4 class="field-label">404</h4>
+    shop not found
+        <a href="#GenericBadResponse">GenericBadResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="shopItemsAdd"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /shop/{shop_id}/add_items</code></pre></div>
+    <div class="method-summary">add items to the shop (<span class="nickname">shopItemsAdd</span>)</div>
+    <div class="method-notes">Using this path you can add items to the shop. (Protected)</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">shop_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: int64</div>    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#GenericShopItem">GenericShopItem</a> (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; add items </div>
+                </div>  <!-- field-items -->
+
+    <h3 class="field-label">Request headers</h3>
+    <div class="field-items">
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GenericGoodResponse">GenericGoodResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "response" : { },
+  "status" : true
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    accepted and created
+        <a href="#GenericGoodResponse">GenericGoodResponse</a>
+    <h4 class="field-label">400</h4>
+    invalid content passed
+        <a href="#GenericBadResponse">GenericBadResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="shopNewPurchase"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /shop/{shop_id}/new_purchase</code></pre></div>
+    <div class="method-summary">commit new purchase (<span class="nickname">shopNewPurchase</span>)</div>
+    <div class="method-notes">Using this path you can commit purchase.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">shop_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: int64</div>    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#GenericShopPurchase">GenericShopPurchase</a> (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; commit purchase </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GenericGoodResponse">GenericGoodResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "response" : { },
+  "status" : true
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    ok
+        <a href="#GenericGoodResponse">GenericGoodResponse</a>
+    <h4 class="field-label">400</h4>
+    invalid content passed
+        <a href="#GenericBadResponse">GenericBadResponse</a>
+    <h4 class="field-label">424</h4>
+    failed dependency
+        <a href="#GenericBadResponse">GenericBadResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="shopRoot"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /shop</code></pre></div>
+    <div class="method-summary">root path (<span class="nickname">shopRoot</span>)</div>
+    <div class="method-notes">Using this path you can check is service online.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GenericGoodResponse">GenericGoodResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "response" : { },
+  "status" : true
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#GenericGoodResponse">GenericGoodResponse</a>
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#FactoryGenericState"><code>FactoryGenericState</code></a></li>
+    <li><a href="#FactoryProviderGenericStatus"><code>FactoryProviderGenericStatus</code></a></li>
+    <li><a href="#GenericBadResponse"><code>GenericBadResponse</code></a></li>
+    <li><a href="#GenericGoodResponse"><code>GenericGoodResponse</code></a></li>
+    <li><a href="#GenericItem"><code>GenericItem</code></a></li>
+    <li><a href="#GenericShopItem"><code>GenericShopItem</code></a></li>
+    <li><a href="#GenericShopPurchase"><code>GenericShopPurchase</code></a></li>
+    <li><a href="#PurchaseObject"><code>PurchaseObject</code></a></li>
+    <li><a href="#PurchaseOutObject"><code>PurchaseOutObject</code></a></li>
+    <li><a href="#ShopGenericSlotObject"><code>ShopGenericSlotObject</code></a></li>
+    <li><a href="#ShopObject"><code>ShopObject</code></a></li>
+    <li><a href="#inline_response_200"><code>inline_response_200</code></a></li>
+    <li><a href="#inline_response_201"><code>inline_response_201</code></a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="FactoryGenericState"><code>FactoryGenericState</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">category </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Cakes</span></div>
+<div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: sleeping for 30 seconds</span></div>
+<div class="param">state </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: online</span></div>
+<div class="param">defected </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="FactoryProviderGenericStatus"><code>FactoryProviderGenericStatus</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: sleeping for 30 seconds</span></div>
+<div class="param">state </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: online</span></div>
+<div class="param">unsynced </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="GenericBadResponse"><code>GenericBadResponse</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: false</span></div>
+<div class="param">response </div><div class="param-desc"><span class="param-type"><a href="#object">Object</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="GenericGoodResponse"><code>GenericGoodResponse</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: true</span></div>
+<div class="param">response </div><div class="param-desc"><span class="param-type"><a href="#object">Object</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="GenericItem"><code>GenericItem</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Cake</span></div>
+<div class="param">category </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Cakes</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="GenericShopItem"><code>GenericShopItem</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Cake</span></div>
+<div class="param">category </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Cakes</span></div>
+<div class="param">count </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 100</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="GenericShopPurchase"><code>GenericShopPurchase</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">slot_id </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">count </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 100</span></div>
+<div class="param">user_id </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">method </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: card</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="PurchaseObject"><code>PurchaseObject</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Cake</span></div>
+<div class="param">total </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 12345</span></div>
+<div class="param">user_id </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 12</span></div>
+<div class="param">shop_id </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">method </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: card</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="PurchaseOutObject"><code>PurchaseOutObject</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">item_id </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">ts </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1615897387</span></div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Cake</span></div>
+<div class="param">total </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 12345</span></div>
+<div class="param">user_id </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 12</span></div>
+<div class="param">shop_id </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">method </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: card</span></div>
+<div class="param">items (optional)</div><div class="param-desc"><span class="param-type"><a href="#GenericItem">array[GenericItem]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ShopGenericSlotObject"><code>ShopGenericSlotObject</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Fish</span></div>
+<div class="param">description </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Cool red fish</span></div>
+<div class="param">price </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 3100</span></div>
+<div class="param">category </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: meal</span></div>
+<div class="param">count </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 100</span></div>
+<div class="param">shop_id </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ShopObject"><code>ShopObject</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Pyaterochka</span></div>
+<div class="param">address </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: address</div>
+          <div class="param-desc"><span class="param-type">example: Moscow, Russia, Kek 1-10</span></div>
+<div class="param">number </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: phone</div>
+          <div class="param-desc"><span class="param-type">example: 79167031412</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200"><code>inline_response_200</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">result (optional)</div><div class="param-desc"><span class="param-type"><a href="#ShopObject">array[ShopObject]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_201"><code>inline_response_201</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">shop_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>

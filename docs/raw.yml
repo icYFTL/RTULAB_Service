@@ -1,0 +1,609 @@
+openapi: 3.0.0
+servers:
+  - description: Deployed API
+    url: https://rtuit.icyftl.ru/
+info:
+  description: REST API for RTUITLab project.
+  version: "1.0.0"
+  title: RTUITLab project
+  contact:
+    email: savap0@yandex.ru
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: purchases
+    description: Purchases service
+  - name: shop
+    description: Shop service
+  - name: factory
+    description: Factory service
+paths:
+  /purchases:
+    get:
+      tags:
+        - purchases
+      summary: root path
+      operationId: purchRoot
+      description: |
+        Using this path you can check is service online.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericGoodResponse'
+  /purchases/new_purchase:
+    post:
+      tags:
+        - purchases
+      summary: commit new purchase
+      operationId: purchCommit
+      description: |
+        Using this path you can add new purchase to service.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseObject'
+        description: add new purchase
+      responses:
+        '201':
+          description: accepted and created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericGoodResponse'
+        '400':
+          description: invalid content passed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadResponse'
+  /purchases/get_purchases:
+    get:
+      tags:
+        - purchases
+      summary: get user's purchases
+      operationId: purchGet
+      description: |
+        Using this path you can get user's purchases via user id or purchase id.
+      parameters:
+        - in: query
+          name: user_id
+          description: user's id
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - in: query
+          name: purchase_id
+          description: purchase's id
+          required: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PurchaseOutObject'
+        '400':
+          description: Invalid or empty query params
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadResponse'
+        '404':
+          description: Unknown args
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadResponse'
+  /shop:
+    get:
+      tags:
+        - shop
+      summary: root path
+      operationId: shopRoot
+      description: |
+        Using this path you can check is service online.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericGoodResponse'
+
+  /shop/create:
+    post:
+      tags:
+        - shop
+      summary: create new shop
+      operationId: shopCreate
+      description: |
+        Using this path you can create new shop. (Protected)
+      parameters:
+        - in: header
+          name: XXX-CODE
+          schema:
+            type: string
+            example: Th1$_1S_P0ssw@rd
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShopObject'
+        description: create new shop
+      responses:
+        '201':
+          description: accepted and created
+          content:
+            application/json:
+              schema:
+                properties:
+                  shop_id:
+                    type: integer
+                    format: int64
+                    example: 1
+        '400':
+          description: invalid content passed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadResponse'
+
+  /shop/{shop_id}/add_items:
+    put:
+      tags:
+        - shop
+      summary: add items to the shop
+      operationId: shopItemsAdd
+      description: |
+        Using this path you can add items to the shop. (Protected)
+      parameters:
+        - in: header
+          required: true
+          name: XXX-CODE
+          schema:
+            type: string
+            example: Th1$_1S_P0ssw@rd
+        - in: path
+          required: true
+          name: shop_id
+          schema:
+            type: integer
+            format: int64
+            example: 1
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/GenericShopItem'
+        description: add items
+      responses:
+        '201':
+          description: accepted and created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericGoodResponse'
+        '400':
+          description: invalid content passed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadResponse'
+  /shop/{shop_id}/new_purchase:
+    post:
+      tags:
+        - shop
+      summary: commit new purchase
+      operationId: shopNewPurchase
+      description: |
+        Using this path you can commit purchase.
+      parameters:
+        - in: path
+          required: true
+          name: shop_id
+          schema:
+            type: integer
+            format: int64
+            example: 1
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenericShopPurchase'
+        description: commit purchase
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericGoodResponse'
+        '424':
+          description: failed dependency
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadResponse'
+        '400':
+          description: invalid content passed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadResponse'
+
+  /shop/{shop_id}/get_slots:
+    get:
+      tags:
+        - shop
+      summary: get available slots for a shop
+      operationId: shopGetSlots
+      description: |
+        Using this path you can get available slots for a shop.
+      parameters:
+        - in: path
+          required: true
+          name: shop_id
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShopGenericSlotObject'
+        '404':
+          description: shop not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadResponse'
+        '400':
+          description: invalid data
+          content:
+            application/json:
+             schema:
+               $ref: '#/components/schemas/GenericBadResponse'
+  /shop/get_shops:
+    get:
+      tags:
+        - shop
+      summary: get available shops
+      operationId: shopGetShops
+      description: |
+        Using this path you can get available shops.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  result:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ShopObject'
+  /factory:
+    get:
+      tags:
+        - factory
+      summary: root path
+      operationId: factoryRoot
+      description: |
+        Using this path you can check is service online.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericGoodResponse'
+
+  /factory/self/status:
+    get:
+      tags:
+        - factory
+      summary: get factories statuses
+      operationId: factorySelfStatus
+      description: |
+        Using this path you can check factories's statuses.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FactoryGenericState'
+  /factory/provider/status:
+    get:
+      tags:
+        - factory
+      summary: get provider status
+      operationId: factoryProviderStatus
+      description: |
+        Using this path you can check provider's status.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FactoryProviderGenericStatus'
+components:
+  schemas:
+    GenericGoodResponse:
+      type: object
+      required:
+        - status
+        - response
+      properties:
+        status:
+          type: boolean
+          example: true
+        response:
+          type: object
+    GenericBadResponse:
+      type: object
+      required:
+        - status
+        - response
+      properties:
+        status:
+          type: boolean
+          example: false
+        response:
+          type: object
+    ShopObject:
+        type: object
+        required:
+          - name
+          - address
+          - number
+        properties:
+          name:
+            type: string
+            example: Pyaterochka
+          address:
+            type: string
+            format: address
+            example: Moscow, Russia, Kek 1-10
+          number:
+            type: string
+            format: phone
+            example: 79167031412
+    ShopGenericSlotObject:
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - price
+        - category
+        - count
+        - shop_id
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 0
+          example: 1
+        name:
+          type: string
+          example: Fish
+        description:
+          type: string
+          example: Cool red fish
+        price:
+          type: integer
+          format: int64
+          minimum: 0
+          example: 3100
+        category:
+          type: string
+          example: meal
+        count:
+          type: integer
+          format: int64
+          minimum: 0
+          example: 100
+        shop_id:
+          type: integer
+          format: int64
+          minimum: 0
+          example: 1
+
+    PurchaseObject:
+      type: object
+      required:
+        - name
+        - total
+        - user_id
+        - shop_id
+        - method
+      properties:
+        name:
+          type: string
+          example: Cake
+        total:
+          type: integer
+          format: int64
+          example: 12345
+        user_id:
+          type: integer
+          format: int64
+          example: 12
+        shop_id:
+          type: integer
+          format: int64
+          example: 1
+        method:
+          type: string
+          example: card
+          pattern: '^(card)?(cash)?$'
+
+    PurchaseOutObject:
+      type: object
+      required:
+        - id
+        - item_id
+        - ts
+        - total
+        - user_id
+        - shop_id
+        - method
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        item_id:
+          type: integer
+          format: int64
+          example: 1
+        ts:
+          type: integer
+          format: int64
+          example: 1615897387
+        name:
+          type: string
+          example: Cake
+        total:
+          type: integer
+          format: int64
+          example: 12345
+        user_id:
+          type: integer
+          format: int64
+          example: 12
+        shop_id:
+          type: integer
+          format: int64
+          example: 1
+        method:
+          type: string
+          example: card
+          pattern: '^(card)?(cash)?$'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenericItem'
+
+    GenericItem:
+      type: object
+      required:
+        - name
+        - category
+      properties:
+        name:
+          type: string
+          example: Cake
+        category:
+          type: string
+          example: Cakes
+
+    GenericShopItem:
+      type: object
+      required:
+        - name
+        - category
+        - count
+      properties:
+        name:
+          type: string
+          example: Cake
+        category:
+          type: string
+          example: Cakes
+        count:
+          type: integer
+          format: int64
+          example: 100
+
+    GenericShopPurchase:
+      type: object
+      required:
+        - slot_id
+        - count
+        - user_id
+        - method
+      properties:
+        slot_id:
+          type: integer
+          format: int64
+          minimum: 0
+          example: 1
+        count:
+          type: integer
+          format: int64
+          minimum: 0
+          example: 100
+        user_id:
+          type: integer
+          format: int64
+          minimum: 0
+          example: 1
+        method:
+          type: string
+          example: card
+          pattern: '^(card)?(cash)?$'
+
+    FactoryGenericState:
+      type: object
+      required:
+        - category
+        - status
+        - state
+        - defected
+      properties:
+        category:
+          type: string
+          example: Cakes
+        status:
+          type: string
+          example: sleeping for 30 seconds
+        state:
+          type: string
+          example: online
+        defected:
+          type: integer
+          format: int64
+          example: 0
+
+    FactoryProviderGenericStatus:
+      type: object
+      required:
+        - status
+        - state
+        - unsynced
+      properties:
+        status:
+          type: string
+          example: sleeping for 30 seconds
+        state:
+          type: string
+          example: online
+        unsynced:
+          type: integer
+          format: int64
+          example: 0

@@ -13,18 +13,21 @@ def on_root():
 def on_factory_status():
     reply = []
     for obj in factory_objs:
-        reply.append({'category': obj.category, 'state': obj.state, 'status': obj.status})
+        state = 'online' if obj.isAlive() else 'offline'
+        reply.append({'category': obj.category, 'state': state, 'status': obj.status, 'defected': obj.defected})
 
     return Reply.ok(result=reply)
 
 
 @app.route('/factory/provider/status', methods=['GET'])
 def on_provider_status():
-    return Reply.ok(state=provider_obj.state, status=provider_obj.status, unsynced=provider_obj.unsynced)
+    state = 'online' if provider_obj.isAlive() else 'offline'
+    return Reply.ok(state=state, status=provider_obj.status, unsynced=provider_obj.unsynced)
 
 
 @app.route('/factory/provider/toggle', methods=['PATCH'])
 def on_provider_toggle():
+    return Reply.forbidden(error='Not implemented')
     data = request.json
 
     if not data:
@@ -51,6 +54,7 @@ def on_provider_toggle():
 
 @app.route('/factory/self/toggle', methods=['PATCH'])
 def on_factory_toggle():
+    return Reply.forbidden(error='Not implemented')
     data = request.json
 
     if not data:
