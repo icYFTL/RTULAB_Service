@@ -16,7 +16,7 @@ services:
       - ./purchases_storage/init_db.sh:/docker-entrypoint-initdb.d/purchases_init_db.sh
 
   factory:
-    build: ./factory
+    image: icyftl/rtuitlab_factory
     command: python3 main.py
     depends_on:
       - db
@@ -32,7 +32,7 @@ services:
       - PGPASSWORD=factory
 
   shop:
-    build: ./shop
+    image: icyftl/rtuitlab_shop
     command: python3 main.py
     depends_on:
       - db
@@ -48,7 +48,7 @@ services:
       - PGPASSWORD=shop
 
   purchases:
-    build: ./purchases_storage
+    image: icyftl/rtuitlab_purchases
     command: python3 main.py
     depends_on:
       - db
