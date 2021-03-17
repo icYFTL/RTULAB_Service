@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
   - description: Deployed API
-    url: https://rtuit.icyftl.ru/
+    url: https://rulab.icyftl.ru/
 info:
   description: REST API for RTUITLab project.
   version: "1.0.0"

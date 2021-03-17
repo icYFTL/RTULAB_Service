@@ -34,6 +34,9 @@ def on_create_shop():
     if not data:
         return Reply.bad_request(error='Empty json')
 
+    if not isinstance(data, dict):
+        return Reply.bad_request(error='Invalid json. It must be a dict.')
+
     _check = check_args_important(('name', 'address', 'number'), **data)
     if not _check[0]:
         return Reply.bad_request(error=f'Empty important {_check[1]} field passed')
@@ -65,6 +68,9 @@ def on_add_items(shop_id):
     if not data:
         return Reply.bad_request(error='Empty json')
 
+    if not isinstance(data, dict):
+        return Reply.bad_request(error='Invalid json. It must be a dict.')
+
     try:
         shop_id = int(shop_id)
     except ValueError:
@@ -84,14 +90,28 @@ def on_add_items(shop_id):
         if not _check[0]:
             return Reply.bad_request(error=f'Invalid item. {_check[1]} field is empty')
 
-        slots_methods.add_slot(models.Slot(
-            name=item['name'].lower(),
-            description='From factory',
-            price=randint(100, 1000000),
-            category=item['category'],
-            count=item['count'],
-            shop_id=shop_id
-        ))
+        if not isinstance(item['name'], str) or len(item['data']) > 100:
+            return Reply.bad_request(error='Invalid item name')
+
+        if not isinstance(item['category'], str) or len(item['category']) > 50:
+            return Reply.bad_request(error='Invalid item category')
+
+        if not isinstance(item['count'], int) or item['count'] > 2 ** 63 or item['count'] < 1:
+            return Reply.bad_request(error='Invalid item count')
+
+        slot = slots_methods.get_slots(name=item['name'].lower(), shop_id=shop_id)
+        if slot:
+            slot = slot[0]
+            slot.count += item['count']
+        else:
+            slots_methods.add_slot(models.Slot(
+                name=item['name'].lower(),
+                description='From factory',
+                price=randint(100, 1000000),
+                category=item['category'],
+                count=item['count'],
+                shop_id=shop_id
+            ))
 
     return Reply.created()
 
@@ -105,6 +125,9 @@ def on_new_purchase(shop_id):
     data = request.json
     if not data:
         return Reply.bad_request(error='Empty json')
+
+    if not isinstance(data, dict):
+        return Reply.bad_request(error='Invalid json. It must be a dict.')
 
     try:
         shop_id = int(shop_id)

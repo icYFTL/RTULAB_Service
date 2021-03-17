@@ -69,5 +69,5 @@ class Reply:
     @staticmethod
     def created(**kwargs) -> tuple:
         if not kwargs:
-            return json.dumps({'status': False, 'response': {'error': 'Created'}}), 201
-        return json.dumps({'status': False, 'response': kwargs}, ensure_ascii=False), 201
+            return json.dumps({'status': True, 'response': {'error': 'Created'}}), 201
+        return json.dumps({'status': True, 'response': kwargs}, ensure_ascii=False), 201

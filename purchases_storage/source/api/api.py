@@ -16,6 +16,10 @@ def on_new_purchase():
     data = request.json
     if not data:
         return Reply.bad_request(error='Empty json')
+
+    if not isinstance(data, dict):
+        return Reply.bad_request(error='Invalid json. It must be a dict.')
+
     _check = check_args_important(('name', 'total', 'user_id', 'shop_id', 'method'), **data)
     if not _check[0]:
         return Reply.bad_request(error=f'Empty important {_check[1]} field passed')
