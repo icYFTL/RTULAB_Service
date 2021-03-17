@@ -14,7 +14,7 @@ class PurchasesAPI:
 
     def add_purchase(self, name: str, total: int, user_id: int, shop_id: int, method: str, category=None) -> int:
         try:
-            r = requests.post(self.host + '/purchases/new_purchase', json={
+            r = requests.post(self.host + '/new_purchase', json={
                 'name': name,
                 'total': total,
                 'user_id': user_id,
