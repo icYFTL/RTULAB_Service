@@ -90,7 +90,7 @@ def on_add_items(shop_id):
         if not _check[0]:
             return Reply.bad_request(error=f'Invalid item. {_check[1]} field is empty')
 
-        if not isinstance(item['name'], str) or len(item['data']) > 100:
+        if not isinstance(item['name'], str) or len(item['name']) > 100:
             return Reply.bad_request(error='Invalid item name')
 
         if not isinstance(item['category'], str) or len(item['category']) > 50:
