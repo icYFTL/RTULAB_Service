@@ -1,7 +1,7 @@
 import requests
 from random import randint, choice
 
-HOST = 'http://localhost:8004/'
+HOST = 'https://rulab.icyftl.ru/'
 PURCHASES_HOST = HOST + 'purchases'
 SHOP_HOST = HOST + 'shop'
 FACTORY_HOST = HOST + 'factory'
